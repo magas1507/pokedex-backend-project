@@ -37,4 +37,20 @@ export class pokemonCatalog {
     this.pokemons = this.pokemons.filter((p) => p.id !== id);
     console.log(formatMessage("OK", "Pokémon removido do catálogo."));
   }
+
+  public calculateTotalWeight(): number {
+    return this.pokemons.reduce((total, p) => total + p.weight, 0);
+  }
+
+  public allHasName(): boolean {
+    return this.pokemons.every((p) => p.name.length > 0);
+  }
+
+  public searchByName(name: string): PokemonResumo | undefined {
+    return this.pokemons.find((p) => p.name === name.toLowerCase());
+  }
+
+  public total(): number {
+    return this.pokemons.length;
+  }
 }
