@@ -1,7 +1,7 @@
 import { PokemonResumo } from "../models/Pokemon";
 import { formatPokemon, formatMessage } from "../utils/textFormatters";
 
-export class CatalogoPokemon {
+export class pokemonCatalog {
   private pokemons: PokemonResumo[] = [];
 
   public addPokemon(pokemon: PokemonResumo): void {
@@ -13,4 +13,19 @@ export class CatalogoPokemon {
     this.pokemons.push(pokemon);
     console.log(formatMessage("OK", `${pokemon.name} adicionado ao catálogo.`));
   }
+
+  public listPokemon(): void {
+    if (this.pokemons.length === 0) {
+      console.log(formatMessage("AVISO", "Catálogo vazio."));
+      return;
+    }
+
+    console.log("\nCatálogo atual:");
+
+
+    this.pokemons.forEach((pokemon): void => {
+      console.log(formatPokemon(pokemon));
+    })
+  }
+
 }
