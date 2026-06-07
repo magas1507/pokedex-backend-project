@@ -1,10 +1,10 @@
-import { CatalogoPokemon } from "./services/BoxService";
-import { TerminalController } from "./controllers/TerminalController";
+import { PokemonCatalog } from "./services/BoxServices";
+import { TerminalController } from "./controllers/TerminalControllers";
 
 async function main(): Promise<void> {
-  const catalogo = new CatalogoPokemon();
-  const controller = new TerminalController(catalogo);
-  await controller.executarFluxoDemo();
+  const catalog = new PokemonCatalog();
+  const controller = new TerminalController(catalog);
+  await controller.executeFlowDemo();
 }
 
 main();

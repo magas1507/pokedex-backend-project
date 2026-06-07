@@ -1,7 +1,7 @@
 import { PokemonResumo } from "../models/Pokemon";
 import { formatPokemon, formatMessage } from "../utils/textFormatters";
 
-export class pokemonCatalog {
+export class PokemonCatalog {
   private pokemons: PokemonResumo[] = [];
 
   public addPokemon(pokemon: PokemonResumo): void {
