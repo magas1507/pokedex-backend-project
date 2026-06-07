@@ -28,4 +28,13 @@ export class pokemonCatalog {
     })
   }
 
+  public remover(id: number): void {
+    const exist = this.pokemons.some((p) => p.id === id);
+    if (!exist) {
+      console.log(formatMessage("AVISO", "Nenhum Pokémon encontrado com esse ID."));
+      return;
+    }
+    this.pokemons = this.pokemons.filter((p) => p.id !== id);
+    console.log(formatMessage("OK", "Pokémon removido do catálogo."));
+  }
 }
