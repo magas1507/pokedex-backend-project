@@ -1,0 +1,56 @@
+import { PokemonResumo } from "../models/Pokemon";
+import { formatPokemon, formatMessage } from "../utils/textFormatters";
+
+export class PokemonCatalog {
+  private pokemons: PokemonResumo[] = [];
+
+  public addPokemon(pokemon: PokemonResumo): void {
+    const exist = this.pokemons.some((item) => item.id === pokemon.id);
+    if (exist) {
+      console.log(formatMessage("AVISO", `${pokemon.name} já está no catálogo.`));
+      return;
+    }
+    this.pokemons.push(pokemon);
+    console.log(formatMessage("OK", `${pokemon.name} adicionado ao catálogo.`));
+  }
+
+  public listPokemon(): void {
+    if (this.pokemons.length === 0) {
+      console.log(formatMessage("AVISO", "Catálogo vazio."));
+      return;
+    }
+
+    console.log("\nCatálogo atual:");
+
+
+    this.pokemons.forEach((pokemon): void => {
+      console.log(formatPokemon(pokemon));
+    })
+  }
+
+  public remover(id: number): void {
+    const exist = this.pokemons.some((p) => p.id === id);
+    if (!exist) {
+      console.log(formatMessage("AVISO", "Nenhum Pokémon encontrado com esse ID."));
+      return;
+    }
+    this.pokemons = this.pokemons.filter((p) => p.id !== id);
+    console.log(formatMessage("OK", "Pokémon removido do catálogo."));
+  }
+
+  public calculateTotalWeight(): number {
+    return this.pokemons.reduce((total, p) => total + p.weight, 0);
+  }
+
+  public allHasName(): boolean {
+    return this.pokemons.every((p) => p.name.length > 0);
+  }
+
+  public searchByName(name: string): PokemonResumo | undefined {
+    return this.pokemons.find((p) => p.name === name.toLowerCase());
+  }
+
+  public total(): number {
+    return this.pokemons.length;
+  }
+}
