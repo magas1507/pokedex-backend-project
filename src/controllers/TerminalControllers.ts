@@ -1,3 +1,4 @@
+import fetch from "node-fetch";
 import { searchPokemon } from "../services/PokeApiService";
 import { PokemonCatalog } from "../services/BoxServices"
 import { formatHeader } from "../utils/textFormatters";

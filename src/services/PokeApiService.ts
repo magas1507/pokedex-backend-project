@@ -1,5 +1,6 @@
 import { PokemonApiResponse, PokemonResumo } from "../models/Pokemon"
 import { APIError } from "../models/CustomErrors"
+import fetch from "node-fetch";
 
 const BASE_URL = "https://pokeapi.co/api/v2/pokemon"
 
@@ -10,15 +11,17 @@ function extrairStat(stats: PokemonApiResponse["stats"], namStat: string): numbe
 
 export async function searchPokemon(nameOrId: string): Promise<PokemonResumo | null> {
   try {
-    const response = await fetch(`${BASE_URL}/${nameOrId.toLowerCase().trim()}`);
+    const urlComplet = `${BASE_URL}/${nameOrId.toLowerCase()}`;
+    const response = await fetch(urlComplet);
 
     if (!response.ok) {
-      console.log(`[ERRO] Pokémon não encontrado: ${nameOrId}`);
-      return null;
+      throw new APIError(`[ERRO] Pokémon não encontrado: ${nameOrId}`);
     }
 
     const dates = await response.json() as PokemonApiResponse;
-    const type = dates.type.map((item) => item.type.name);
+
+
+    const type = dates.types.map((item) => item.type.name);
 
     const pokemon: PokemonResumo = {
       id: dates.id,
@@ -35,6 +38,11 @@ export async function searchPokemon(nameOrId: string): Promise<PokemonResumo | n
     return pokemon;
 
   } catch (erro) {
-    throw new APIError(`Não foi possível buscar o Pokémon: ${nameOrId}`);
+    if (erro instanceof APIError) {
+      console.log(erro.message);
+    } else {
+      console.log(`[ERRO] Falha interna ao processar o Pokémon: ${nameOrId}`);
+    }
+    return null;
   }
 }
